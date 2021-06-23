@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="utf-8" />
+	    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+            <!-- 引入 ECharts ECharts-gl（支持3D绘图）文件 -->
+        <script src="../static/js/echarts.common.js"></script>
+        <script src="../static/js/echarts-gl.js"></script>
+		<!--            {#引入ajax依赖路径#}-->
+        <script src ="../static/js/jquery-1.11.1.min.js"></script>
+		<title>Data Visualization Demo</title>
+		<link rel="stylesheet" href="../static/css/app.css" />
+	</head>
+
+	<body>
+		<div class="header">
+			<h1 class="header-title">Data Visualization Demo</h1>
+		</div>
+		<div class="wrapper">
+			<div class="content">
+				<div class="col col-l">
+					<div class="xpanel-wrapper xpanel-wrapper-40">
+						<div class="xpanel xpanel-l-t">
+							<div class="title">Spindle Load</div>
+							<div class="xpanel no-bg" id="SpindleLoad" style="width: 350px;height:350px;">这是一张表格</div>
+                            <script type="text/javascript">
+                                var chartDom = document.getElementById('SpindleLoad');
+                                var SpindleLoadChart = echarts.init(chartDom,'dark');
+                                var SpindleLoadChartOption;
+
+                                function randomData() {
+                                    now = new Date(+now + oneDay);
+                                    value = value + Math.random() * 21 - 10;
+                                    return {
+                                        name: now.toString(),
+                                        value: [
+                                            [now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'),
+                                            Math.round(value)
+                                        ]
+                                    };
+                                }
+
+                                var SpindleLoadData = [];
+                                var now = +new Date(2020, 9, 3);
+                                var oneDay = 24 * 3600 * 1000;
+                                var value = Math.random() * 1000;
+                                for (var i = 0; i < 1000; i++) {
+                                    SpindleLoadData.push(randomData());
+                                }
+
+                                SpindleLoadChartOption = {
+                                    tooltip: {
+                                        trigger: 'axis',
+                                        formatter: function (params) {
+                                            params = params[0];
+                                            var date = new Date(params.name);
+                                            return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' : ' + params.value[1];
+                                        },
+                                        axisPointer: {
+                                            animation: false
+                                        }
+                                    },
+                                    xAxis: {
+                                        type: 'time',
+                                        splitLine: {
+                                            show: false
+                                        }
+                                    },
+                                    yAxis: {
+                                        type: 'value',
+                                        boundaryGap: [0, '100%'],
+                                        splitLine: {
+                                            show: false
+                                        }
+                                    },
+                                    series: [{
+                                        name: '模拟数据',
+                                        type: 'line',
+                                        showSymbol: false,
+                                        hoverAnimation: false,
+                                        data: SpindleLoadData
+                                    }]
+                                };
+
+                                setInterval(function () {
+
+                                    for (var i = 0; i < 5; i++) {
+                                        SpindleLoadData.shift();
+                                        SpindleLoadData.push(randomData());
+                                    }
+
+                                    SpindleLoadChart.setOption({
+                                        series: [{
+                                            data: SpindleLoadData
+                                        }]
+                                    });
+                                }, 1000);
+
+                                SpindleLoadChartOption && SpindleLoadChart.setOption(SpindleLoadChartOption);
+
+                        </script>
+						</div>
+					</div>
+					<div class="xpanel-wrapper xpanel-wrapper-60">
+						<div class="xpanel xpanel-l-b">
+							<div class="title">Spindle Speed</div>
+							<div class="xpanel no-bg" id="SpindleSpeed" style="width: 350px;height:500px;">这是一张表格</div>
+                            <script type="text/javascript">
+                                var chartDom = document.getElementById('SpindleSpeed');
+                                var SpindleSpeedChart = echarts.init(chartDom);
+                                var SpindleSpeedChartOption;
+
+                                function randomData() {
+                                    now = new Date(+now + oneDay);
+                                    value = value + Math.random() * 21 - 10;
+                                    return {
+                                        name: now.toString(),
+                                        value: [
+                                            [now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'),
+                                            Math.round(value)
+                                        ]
+                                    };
+                                }
+
+                                var SpindleSpeedData = [];
+                                var now = +new Date(2020, 9, 3);
+                                var oneDay = 24 * 3600 * 1000;
+                                var value = Math.random() * 1000;
+                                for (var i = 0; i < 1000; i++) {
+                                    SpindleSpeedData.push(randomData());
+                                }
+
+                                SpindleSpeedChartOption = {
+
+                                    tooltip: {
+                                        trigger: 'axis',
+                                        formatter: function (params) {
+                                            params = params[0];
+                                            var date = new Date(params.name);
+                                            return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' : ' + params.value[1];
+                                        },
+                                        axisPointer: {
+                                            animation: false
+                                        }
+                                    },
+                                    xAxis: {
+                                        type: 'time',
+                                        splitLine: {
+                                            show: false
+                                        }
+                                    },
+                                    yAxis: {
+                                        type: 'value',
+                                        boundaryGap: [0, '100%'],
+                                        splitLine: {
+                                            show: false
+                                        }
+                                    },
+                                    series: [{
+                                        name: '模拟数据',
+                                        type: 'line',
+                                        showSymbol: false,
+                                        hoverAnimation: false,
+                                        data: SpindleSpeedData
+                                    }]
+                                };
+
+                                setInterval(function () {
+
+                                    for (var i = 0; i < 5; i++) {
+                                        SpindleSpeedData.shift();
+                                        SpindleSpeedData.push(randomData());
+                                    }
+                                    SpindleSpeedChart.setOption({
+                                        series: [{
+                                            data: SpindleSpeedData
+                                        }]
+                                    });
+                                }, 1000);
+                                SpindleSpeedChartOption && SpindleSpeedChart.setOption(SpindleSpeedChartOption);
+                        </script>
+						</div>
+					</div>
+				</div>
+				<div class="col col-c">
+					<div class="xpanel-wrapper xpanel-wrapper-75">
+						<div class="xpanel no-bg" id="CutterTrajectory" >
+                            <script type="text/javascript">
+                                // 基于准备好的dom，初始化echarts实例
+                                var myChart = echarts.init(document.getElementById('CutterTrajectory'));
+                                var data = [];
+                                var option;
+                                // Parametric curve
+                                for (var t = 0; t < 25; t += 0.1) {
+                                    var x = (1 + 0.25 * Math.cos(75 * t)) * Math.cos(t);
+                                    var y = (1 + 0.25 * Math.cos(75 * t)) * Math.sin(t);
+                                    var z = t + 2.0 * Math.sin(75 * t);
+                                }
+                                {#data.push([0,0,0])#}
+                                {#console.log(data.length);//打印数据点的个数#}
+                                {#console.log(data)#}
+                                option = {
+
+                                    tooltip: {},
+                                    backgroundColor: '#7dcae8',
+                                    visualMap: {
+                                        show: false,
+                                        dimension: 2,
+                                        min: 0,
+                                        max: 30,
+
+                                    },
+                                    xAxis3D: {
+                                        color: '#fff',
+                                        type: 'value'
+
+                                    },
+                                    yAxis3D: {
+                                        color: '#fff',
+                                        type: 'value'
+                                    },
+                                    zAxis3D: {
+                                        color: '#fff',
+                                        type: 'value'
+                                    },
+                                    grid3D: {
+                                        viewControl: {
+                                            projection: 'orthographic'
+                                        }
+                                    },
+                                    series: [{
+                                        type: 'line3D',
+                                        data: data,
+                                        lineStyle: {
+
+                                            width: 2
+                                        }
+                                    }]
+                                };
+                                myChart.setOption(option)
+                        </script>
+                            <script>
+                                function getNewPoint(){
+                                    $.ajax({
+                                        url : "/newPoint",// visit route
+                                        type: "post",//http request type
+                                        timeout :1000,// time out limit
+                                        dataType:'Json',
+                                        success:function (json) {
+                                            var x = json.x
+                                            var y = json.y
+                                            var z = json.z
+                                            option.series.push(data.push([x,y,z]))
+                                            myChart.setOption(option)
+											window.addEventListener("resize",function(){
+												myChart.resize();
+											});
+                                            console.log(data)
+                                            return true
+                                        },error:function (){
+                                            alert("Could not update data")
+                                            return false
+                                        }
+                                        }
+                                    )
+                                }
+                                setInterval(getNewPoint,1000)
+
+                            </script>
+						</div>
+					</div>
+					<div class="xpanel-wrapper xpanel-wrapper-25">
+						<div class="xpanel xpanel-c-b">
+							<div class="title title-long"> &nbsp; Motor Vibration</div>
+							<div class="xpanel no-bg" id="MotorVibration" >这是一张表格</div>
+                            <script type="text/javascript">
+                                var chartDom = document.getElementById('MotorVibration');
+                                var MotorVibrationChart = echarts.init(chartDom);
+                                var MotorVibrationChartOption;
+
+                                function randomData() {
+                                    now = new Date(+now + oneDay);
+                                    value = value + Math.random() * 21 - 10;
+                                    return {
+                                        name: now.toString(),
+                                        value: [
+                                            [now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'),
+                                            Math.round(value)
+                                        ]
+                                    };
+                                }
+
+                                var MotorVibrationData = [];
+                                var now = +new Date(2020, 9, 3);
+                                var oneDay = 24 * 3600 * 1000;
+                                var value = Math.random() * 1000;
+                                for (var i = 0; i < 1000; i++) {
+                                    MotorVibrationData.push(randomData());
+                                }
+
+                                MotorVibrationChartOption = {
+
+                                    tooltip: {
+                                        trigger: 'axis',
+                                        formatter: function (params) {
+                                            params = params[0];
+                                            var date = new Date(params.name);
+                                            return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' : ' + params.value[1];
+                                        },
+                                        axisPointer: {
+                                            animation: false
+                                        }
+                                    },
+                                    xAxis: {
+                                        type: 'time',
+                                        splitLine: {
+                                            show: false
+                                        }
+                                    },
+                                    yAxis: {
+                                        type: 'value',
+                                        boundaryGap: [0, '100%'],
+                                        splitLine: {
+                                            show: false
+                                        }
+                                    },
+                                    series: [{
+                                        name: '模拟数据',
+                                        type: 'line',
+                                        showSymbol: false,
+                                        hoverAnimation: false,
+                                        data: MotorVibrationData
+                                    }]
+                                };
+
+                                setInterval(function () {
+
+                                    for (var i = 0; i < 5; i++) {
+                                        MotorVibrationData.shift();
+                                        MotorVibrationData.push(randomData());
+                                    }
+
+                                    MotorVibrationChart.setOption({
+                                        series: [{
+                                            data: MotorVibrationData
+                                        }]
+                                    });
+                                }, 1000);
+
+                                MotorVibrationChartOption && MotorVibrationChart.setOption(MotorVibrationChartOption);
+
+                        </script>
+						</div>
+					</div>
+				</div>
+				<div class="col col-r">
+					<div class="xpanel-wrapper xpanel-wrapper-25">
+						<div class="xpanel xpanel-r-t">
+							<div class="title">4</div>
+							<div class="xpanel no-bg" id="4">
+								这是一张表格
+							</div>
+						</div>
+					</div>
+					<div class="xpanel-wrapper xpanel-wrapper-30">
+						<div class="xpanel xpanel-r-m">
+							<div class="title">5</div>
+							<div class="xpanel no-bg" id="5">
+								这是一张表格
+							</div>
+						</div>
+					</div>
+					<div class="xpanel-wrapper xpanel-wrapper-45">
+						<div class="xpanel xpanel-r-b">
+							<div class="title">Feed rate</div>
+							<div class="xpanel no-bg" id="FeedRate">这是一张表格</div>
+                                <script type="text/javascript">
+                                var chartDom = document.getElementById('FeedRate');
+                                var FeedRateChart = echarts.init(chartDom);
+                                var FeedRateChartOption;
+
+                                function randomData() {
+                                    now = new Date(+now + oneDay);
+                                    value = value + Math.random() * 21 - 10;
+                                    return {
+                                        name: now.toString(),
+                                        value: [
+                                            [now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'),
+                                            Math.round(value)
+                                        ]
+                                    };
+                                }
+
+                                var FeedRateData = [];
+                                var now = +new Date(2020, 9, 3);
+                                var oneDay = 24 * 3600 * 1000;
+                                var value = Math.random() * 1000;
+                                for (var i = 0; i < 1000; i++) {
+                                    FeedRateData.push(randomData());
+                                }
+
+                                FeedRateChartOption = {
+
+                                    tooltip: {
+                                        trigger: 'axis',
+                                        formatter: function (params) {
+                                            params = params[0];
+                                            var date = new Date(params.name);
+                                            return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' : ' + params.value[1];
+                                        },
+                                        axisPointer: {
+                                            animation: false
+                                        }
+                                    },
+                                    xAxis: {
+                                        type: 'time',
+                                        splitLine: {
+                                            show: false
+                                        }
+                                    },
+                                    yAxis: {
+                                        type: 'value',
+                                        boundaryGap: [0, '100%'],
+                                        splitLine: {
+                                            show: false
+                                        }
+                                    },
+                                    series: [{
+                                        name: '模拟数据',
+                                        type: 'line',
+                                        showSymbol: false,
+                                        hoverAnimation: false,
+                                        data: FeedRateData
+                                    }]
+                                };
+
+                                setInterval(function () {
+
+                                    for (var i = 0; i < 5; i++) {
+                                        FeedRateData.shift();
+                                        FeedRateData.push(randomData());
+                                    }
+
+                                    FeedRateChart.setOption({
+                                        series: [{
+                                            data: FeedRateData
+                                        }]
+                                    });
+                                }, 1000);
+
+                                FeedRateChartOption && FeedRateChart.setOption(FeedRateChartOption);
+
+                        </script>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
